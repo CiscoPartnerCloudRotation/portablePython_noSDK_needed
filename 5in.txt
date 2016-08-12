@@ -1,0 +1,29 @@
+UCSM 192.168.19.134 ucspe ucspe  
+$action = deleted
+$vlNum = 100 = +1
+$_tn = Gold_Tenant
+
+MACPOOL $action $_tn_MAC_POOL
+MACPOOLBLOCK $action $_tn_MAC_POOL 00:25:ee:00:00:00 00:25:ee:00:00:ff
+
+UUIDPOOL $action $_tn_UUID_POOL
+UUIDPOOLBLOCK $action $_tn_UUID_POOL 0000-000000000001 0000-000000000011
+
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+
+

@@ -1,0 +1,16 @@
+UCSM 192.168.19.134 ucspe ucspe  
+$action = created
+$maccnt = 00 = +1
+$tenant_name = Gold_Tenant
+VLAN $action 100
+VLAN $action 101
+VLAN $action 102
+VLAN $action 103
+VLAN $action 104
+VLAN $action 105
+VLAN $action 106
+MACPOOL $action $tenant_name_MAC_POOL
+MACPOOLBLOCK $action $tenant_name_MAC_POOL 00:25:$maccnt:00:00:00 00:25:$maccnt:00:00:ff
+MACPOOLBLOCK $action $tenant_name_MAC_POOL 00:25:$maccnt:00:00:00 00:25:$maccnt:00:00:ff
+MACPOOLBLOCK $action $tenant_name_MAC_POOL 00:25:$maccnt:00:00:00 00:25:$maccnt:00:00:ff
+

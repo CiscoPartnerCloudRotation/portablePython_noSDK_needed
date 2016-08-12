@@ -1,15 +1,36 @@
 import xml.etree.ElementTree as ET
 import f
+import sys
 head = []
 #head.append(["User-Agent","myown"])
 
 
+org = "org-root"
 
-fl = open("in.txt","r")
+fl = open(sys.argv[1],"r")
+
+
+
 
 text = fl.read()
 ActionList = []
 lines = text.split("\n")
+
+
+for line in lines:
+	if line.startswith("$"):
+		varbs = line.split(" = ")
+	
+		for i in range(len(lines)):
+			if lines[i].startswith("$")==False:
+				oldline = lines[i]
+				lines[i] = varbs[1].join(lines[i].split(varbs[0]))
+				if oldline != lines[i]:		
+					if len(varbs)>2:
+					 vlen = len(varbs[1])
+					 varbs[1] = str(int(varbs[1])+int(varbs[2]))
+					 varbs[1] = "0"*(vlen-len(varbs[1]))+varbs[1]
+
 for line in lines:
 	words = line.split(" ")
 	if len(words)>1:
@@ -17,7 +38,9 @@ for line in lines:
 			ucsmIP = words[1] #assign IP address from text file
 			ucsmUser = words[2]
 			ucsmPass = words[3]
-			print ucsmIP
+		elif words[0].startswith("$"):
+			#print words, "@"
+			1+1
 		else:
 			ActionList.append(words) #get objects from text file
 			
@@ -29,24 +52,47 @@ aaaLogin.set("inName",ucsmUser)
 aaaLogin.set("inPassword",ucsmPass)
 ucsmBody =   ET.tostring(aaaLogin)
 
-ucsmIP = "10.0.254.12"
 
 
 #ret = f.API_call("http://"+ucsmIP+"/nuova",ucsmBody,head)
 #retXML = ET.fromstring(ret)
 
 #outCookie =  retXML.get("outCookie")
-outCookie = "1471015912/e622ff26-6362-4aed-a1c7-a43d7ef0d4ed"
+outCookie = "1471028430/3267b149-ab6a-435c-a7c3-1303effef903"
 #print outCookie
 
 for line in ActionList: 
 	print line
 	ucsmBody = ""
 	if line[0]=="VLAN":
-		ucsmBody = f.makeUCS_XML(outCookie,"fabricVlan","fabric/lan/net-VLAN"+line[2],{"id":line[2],"name":"VLAN"+line[2],"status":line[1]})
-	ret = f.API_call("http://"+ucsmIP+"/nuova",ucsmBody,head)
-	#retXML = ET.fromstring(ret)
+		ucsmBody = f.makeUCS_XML(outCookie,"fabricVlan","fabric/lan/net-vlan"+line[2],{"id":line[2],"name":"vlan"+line[2],"status":line[1]})
+		
+	if line[0]=="MACPOOL":
+		ucsmBody = f.makeUCS_XML(outCookie,"macpoolPool",org+"/mac-pool-"+line[2],{"name":line[2],"status":line[1]})
+		
+	if line[0]=="MACPOOLBLOCK":
+		ucsmBody = f.makeUCS_XML(outCookie,"macpoolBlock",org+"/mac-pool-"+line[2]+"/block-"+line[3]+"-"+line[4],{"from":line[3], "to":line[4],"status":line[1]})
 	
+	if line[0]=="UUIDPOOL":
+		ucsmBody = f.makeUCS_XML(outCookie,"uuidpoolPool",org+"/uuid-pool-"+line[2],{"name":line[2],"status":line[1]})
+	
+	if line[0]=="UUIDPOOLBLOCK":
+		ucsmBody = f.makeUCS_XML(outCookie,"uuidpoolBlock",org+"/uuid-pool-"+line[2]+"/block-"+line[3]+"-"+line[4],{"from":line[3], "to":line[4],"status":line[1]})
+	if line[0]=="SERVER":
+		ucsmBody = f.makeUCS_XML(outCookie,"lsServer",org+"/ls-"+line[2],{"name":line[2],"status":line[1],"identPoolName":line[3]})
+	if line[0]=="ADDNIC":
+		ucsmBody = f.makeUCS_XML(outCookie,"vnicEther",org+"/ls-"+line[2]+"/ether-"+line[3],{"name":line[3],"status":line[1],"identPoolName":line[4]})
+	
+	if line[0]=="ADDVLAN":
+		ucsmBody = f.makeUCS_XML(outCookie,"vnicEtherIf",org+"/ls-"+line[2]+"/ether-"+line[3]+"/if-vlan"+line[4],{"name":"vlan"+line[4],"status":line[1],"defaultNet":line[5]})
+	
+
+
+
+	if ucsmBody != "":
+		ret = f.API_call("http://"+ucsmIP+"/nuova",ucsmBody,head)
+		retXML = ET.fromstring(ret)
+		#print ret
 		
 		
 		

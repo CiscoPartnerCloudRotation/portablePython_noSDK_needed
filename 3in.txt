@@ -1,0 +1,22 @@
+UCSM 192.168.19.134 ucspe ucspe  
+$action = deleted
+$vlNum = 100 = +1
+
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+VLAN $action $vlNum
+
+

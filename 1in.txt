@@ -1,0 +1,10 @@
+UCSM 192.168.19.134 ucspe ucspe  
+
+
+VLAN created 100
+VLAN created 101
+VLAN created 102
+VLAN created 103
+VLAN created 104
+VLAN created 105
+VLAN deleted 105
