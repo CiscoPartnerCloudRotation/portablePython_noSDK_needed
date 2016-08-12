@@ -1,1 +1,9 @@
 UCSM 10.0.254.12 admin  
+VLAN deleted 100
+VLAN deleted 101
+VLAN deleted 102
+VLAN deleted 103
+VLAN deleted 104
+VLAN deleted 105
+VLAN deleted 106
+
